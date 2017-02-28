@@ -23,86 +23,18 @@ export function handleReplyMessage (
         const email = reply.from;
         const inReplyToId = reply.inReplyToId;
 
-        const dictionaryEmail = isDictionaryEmail(reply.to);
-        if (dictionaryEmail) {
-                return promises.getPlayer(email).then(player =>
-                        player ?
-                                handleDictionaryEmail(
+        return promises.getMessage(inReplyToId).then(message =>
+                message && !message.reply ?
+                        promises.getPlayer(email).then(player =>
+                                handleTimelyReply(
                                         reply,
                                         timestampMs,
                                         player,
+                                        message,
                                         data,
-                                        promises) :
-                                null
-                );
-        } else {
-                return promises.getMessage(inReplyToId).then(message =>
-                        message && !message.reply ?
-                                promises.getPlayer(email).then(player =>
-                                        handleTimelyReply(
-                                                reply,
-                                                timestampMs,
-                                                player,
-                                                message,
-                                                data,
-                                                promises)) :
-                                null
-                );
-        }
-}
-
-export function isDictionaryEmail (to: string): boolean
-{
-        return (to.toLowerCase().indexOf('dictionary') !== -1);
-}
-
-export function handleDictionaryEmail (
-        reply: Message.MailgunReply,
-        timestampMs: number,
-        player: Player.PlayerState,
-        data: Map.Map<State.NarrativeState>,
-        promises: DBTypes.PromiseFactories)
-{
-        const config = Dictionary.config;
-        const groupData = data[player.version];
-
-        if (player.publicKey) {
-                return KBPGP.loadKey(player.publicKey).then(from => {
-                        const profiles = groupData.profiles;
-                        const profile = Profile.getProfileByEmail(reply.to, profiles);
-                        const keyManager = groupData.keyManagers[profile.name];
-                        const keyManagers = [keyManager, from];
-                        const keyRing = KBPGP.createKeyRing(keyManagers);
-                        const strippedBody = reply.strippedBody;
-                        return KBPGP.decryptVerify(keyRing, strippedBody).then(plaintext => {
-                                const strippedBody = Message.stripBody(plaintext);
-                                const text = strippedBody.toLowerCase();
-                                const name = Dictionary.getCommandReply(text);
-                                return Promises.encryptSendStoreChild(
-                                        name,
-                                        config.help,
-                                        reply.id,
-                                        strippedBody,
-                                        player,
-                                        timestampMs,
-                                        groupData,
-                                        promises);
-                        })
-                });
-        } else {
-                const plaintext = reply.strippedBody.toLowerCase();
-                const strippedBody = Message.stripBody(plaintext);
-                const name = Dictionary.getCommandReply(strippedBody);
-                return Promises.encryptSendStoreChild(
-                        name,
-                        config.help,
-                        reply.id,
-                        reply.strippedBody,
-                        player,
-                        timestampMs,
-                        groupData,
-                        promises);
-        }
+                                        promises)) :
+                        null
+        );
 }
 
 export function handleTimelyReply (
