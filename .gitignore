@@ -2,3 +2,11 @@ build
 node_modules
 .tscache
 **/*.baseDir.ts
+
+# App
+app/packaged_apps
+
+# Server
+server/credentials.json
+server/error.log
+server/info.log
