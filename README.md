@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jameslong/memo.svg?branch=master)](https://travis-ci.org/jameslong/memo)
+
 # Memo
 
 Memo is a collection of tools and source code to create email-based interactive fiction. This repo contains a content editor, browser/desktop clients for offline play, and a server for online play via email. Memo was used to create [Top Secret](https://playtopsecret.com), a video game about the Snowden leaks played by email.
