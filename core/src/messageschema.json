@@ -1,0 +1,104 @@
+{
+        "schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Message",
+        "description": "Describes an in-game email, and its narrative context",
+        "definitions": {
+                "threadDelay": {
+                        "type": "object",
+                        "properties": {
+                                "name": { "type": "string" },
+                                "condition": { "type": "string" },
+                                "delay": {
+                                        "type": "array",
+                                        "items": { "type": "number" },
+                                        "minItems": 3,
+                                        "maxItems": 3,
+                                        "uniqueItems": false
+                                },
+                                "absolute": { "type": "boolean" }
+                        },
+                        "required": ["name", "condition", "delay", "absolute"]
+                },
+                "coord": {
+                        "type": "object",
+                        "properties": {
+                                "x": { "type": "number" },
+                                "y": { "type": "number" }
+                        },
+                        "required": ["x", "y"]
+                }
+        },
+        "type": "object",
+        "properties": {
+                "name": { "type": "string" },
+                "threadSubject": {
+                        "anyOf": [
+                                {
+                                        "type": "string"
+                                }, {
+                                        "type": "null"
+                                }
+                        ]
+                },
+                "startGame": { "type": "boolean" },
+                "endGame": { "type": "boolean" },
+                "script": { "type": "string" },
+                "encrypted": { "type": "boolean" },
+                "receiver": {
+                        "anyOf": [
+                                {
+                                        "type": "string"
+                                }, {
+                                        "type": "null"
+                                }
+                        ]
+                },
+                "position": { "$ref": "#/definitions/coord" },
+                "message": {
+                        "type": "object",
+                        "properties": {
+                                "from": { "type": "string" },
+                                "body": { "type": "string" }
+                        },
+                        "required": ["from", "body"]
+                },
+                "replyOptions": { "type": "string" },
+                "children": {
+                        "type": "array",
+                        "items": { "$ref": "#/definitions/threadDelay" }
+                },
+                "fallback": {
+                        "anyOf": [
+                                {
+                                        "$ref": "#/definitions/threadDelay"
+                                }, {
+                                        "type": "null"
+                                }
+                        ]
+                },
+                "attachment": {
+                        "anyOf": [
+                                {
+                                        "type": "string"
+                                }, {
+                                        "type": "null"
+                                }
+                        ]
+                }
+        },
+        "required": [
+                "name",
+                "threadSubject",
+                "position",
+                "startGame",
+                "endGame",
+                "message",
+                "encrypted",
+                "script",
+                "receiver",
+                "replyOptions",
+                "children",
+                "fallback",
+                "attachment"
+        ]
+}

@@ -1,0 +1,203 @@
+{
+        "Description": "Top Secret stack",
+
+        "Resources": {
+
+                "EC2SecurityGroup" : {
+                        "Type" : "AWS::EC2::SecurityGroup",
+                        "Properties" : {
+                                "GroupDescription" : "Allow access over http from elastic load balancer, and direct SSH access",
+                                "SecurityGroupIngress" : [
+                                        {
+                                                "IpProtocol" : "tcp",
+                                                "FromPort" : "3000",
+                                                "ToPort" : "3000",
+                                                "SourceSecurityGroupId": {
+                                                        "Fn::GetAtt" : [ "ElasticLoadBalancerSecurityGroup", "GroupId" ]
+                                                }
+                                        },
+                                        {
+                                                "IpProtocol": "tcp",
+                                                "FromPort": "22",
+                                                "ToPort": "22",
+                                                "CidrIp": "0.0.0.0/0"
+                                        }
+                                ]
+                        }
+                },
+
+                "S3BucketAccessIAMRole": {
+                        "Type": "AWS::IAM::Role",
+                        "Properties": {
+                                "AssumeRolePolicyDocument": {
+                                        "Version" : "2012-10-17",
+                                        "Statement": [
+                                                {
+                                                        "Effect": "Allow",
+                                                        "Principal": {
+                                                                "Service": [ "ec2.amazonaws.com" ]
+                                                        },
+                                                        "Action": [ "sts:AssumeRole" ]
+                                                }
+                                        ]
+                                },
+                                "Path": "/",
+                                "Policies": [
+                                        {
+                                                "PolicyName": "S3BucketAccessPolicy",
+                                                "PolicyDocument": {
+                                                        "Version" : "2012-10-17",
+                                                        "Statement": [
+                                                                {
+                                                                        "Effect": "Allow",
+                                                                        "Action": [
+                                                                                "s3:ListBucket"
+                                                                        ],
+                                                                        "Resource": [
+                                                                                "arn:aws:s3:::topsecret-deploy"
+                                                                        ]
+                                                                },
+                                                                {
+                                                                        "Effect": "Allow",
+                                                                        "Action": [
+                                                                                "s3:GetObject"
+                                                                        ],
+                                                                        "Resource": [
+                                                                                "arn:aws:s3:::topsecret-deploy/*"
+                                                                        ]
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        {
+                                                "PolicyName": "CloudWatchLogPolicy",
+                                                "PolicyDocument": {
+                                                        "Version": "2012-10-17",
+                                                        "Statement": [
+                                                                {
+                                                                        "Effect": "Allow",
+                                                                        "Action": [
+                                                                                "logs:CreateLogGroup",
+                                                                                "logs:CreateLogStream",
+                                                                                "logs:PutLogEvents",
+                                                                                "logs:DescribeLogStreams"
+                                                                        ],
+                                                                        "Resource": [
+                                                                                "arn:aws:logs:*:*:*"
+                                                                        ]
+                                                                }
+                                                        ]
+                                                }
+                                        }
+                                ]
+                        }
+                },
+
+                "S3BucketAccessIAMProfile": {
+                        "Type": "AWS::IAM::InstanceProfile",
+                        "Properties": {
+                                "Path": "/",
+                                "Roles": [
+                                        {
+                                                "Ref": "S3BucketAccessIAMRole"
+                                        }
+                                ]
+                        }
+                },
+
+                "AutoScalingGroupLaunchConfiguration": {
+                        "Type" : "AWS::AutoScaling::LaunchConfiguration",
+                        "Properties" : {
+                                "IamInstanceProfile": {
+                                        "Ref": "S3BucketAccessIAMProfile"
+                                },
+                                "ImageId" : "ami-f5f41398",
+                                "InstanceMonitoring" : false,
+                                "InstanceType" : "t2.micro",
+                                "KeyName" : "cloudformation",
+                                "SecurityGroups" : [
+                                        {
+                                                "Ref": "EC2SecurityGroup"
+                                        }
+                                ],
+                                "UserData" : {
+                                        "Fn::Base64" : {
+                                                "Fn::Join" : ["\n", [
+                                                        "#!/bin/bash -xe",
+                                                        "cd /home/ec2-user",
+                                                        "yum -y update",
+                                                        "curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -",
+                                                        "yum -y install nodejs",
+                                                        "aws s3 cp s3://topsecret-deploy ./ --recursive",
+                                                        "unzip -o topsecret.zip",
+                                                        "curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O",
+                                                        "chmod +x ./awslogs-agent-setup.py",
+                                                        "./awslogs-agent-setup.py -n -r us-east-1 -c topsecret/server/awslogs.cfg",
+                                                        "cd topsecret/server",
+                                                        "node build/server/src/main.js"
+                                                ] ]
+                                        }
+                                }
+                        }
+                },
+
+                "AutoScalingGroup": {
+                        "Type" : "AWS::AutoScaling::AutoScalingGroup",
+                        "Properties" : {
+                                "AvailabilityZones" :{ "Fn::GetAZs" : "" },
+                                "DesiredCapacity" : "1",
+                                "HealthCheckType" : "ELB",
+                                "HealthCheckGracePeriod" : "300",
+                                "LaunchConfigurationName" : { "Ref" : "AutoScalingGroupLaunchConfiguration" },
+                                "LoadBalancerNames": [
+                                        {
+                                                "Ref": "ElasticLoadBalancer"
+                                        }
+                                ],
+                                "MaxSize" : "1",
+                                "MinSize" : "1"
+                        }
+                },
+
+                "ElasticLoadBalancerSecurityGroup" : {
+                        "Type" : "AWS::EC2::SecurityGroup",
+                        "Properties" : {
+                                "GroupDescription" : "Allow public access over HTTP",
+                                "SecurityGroupIngress" : [
+                                        {
+                                                "IpProtocol" : "tcp",
+                                                "FromPort" : "80",
+                                                "ToPort" : "3000",
+                                                "CidrIp" : "0.0.0.0/0"
+                                        }
+                                ]
+                        }
+                },
+
+                "ElasticLoadBalancer": {
+                        "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+                        "Properties": {
+                                "AvailabilityZones" :{ "Fn::GetAZs" : "" },
+                                "HealthCheck" : {
+                                        "HealthyThreshold" : "2",
+                                        "Interval" : "60",
+                                        "Target" : "HTTP:3000/healthcheck",
+                                        "Timeout" : "10",
+                                        "UnhealthyThreshold" : "10"
+                                },
+                                "Listeners": [
+                                        {
+                                                "InstancePort" : "3000",
+                                                "LoadBalancerPort" : "80",
+                                                "Protocol" : "HTTP"
+                                        }
+                                ],
+                                "SecurityGroups" : [
+                                        {
+                                                "Fn::GetAtt" : [ "ElasticLoadBalancerSecurityGroup", "GroupId" ]
+                                        }
+                                ]
+                        }
+                }
+        }
+}

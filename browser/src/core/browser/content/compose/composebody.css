@@ -1,0 +1,22 @@
+.compose-body {
+        padding: 0 0.25rem;
+}
+
+.compose-body textarea {
+        border: none;
+        background-color: inherit;
+        color: var(--light-font-colour);
+        max-width: 700px;
+        width: 100%;
+        font-size: inherit;
+        font-family: inherit;
+        padding: 0;
+        min-height: 1000px;
+        height: 200vh;
+        line-height: inherit;
+        overflow: hidden;
+}
+
+.compose-body textarea:focus {
+        outline: none;
+}

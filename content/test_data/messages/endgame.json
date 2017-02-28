@@ -1,0 +1,24 @@
+{
+        "name": "endgame",
+        "threadSubject": "endgame_subject",
+        "position": {
+                "x": 275,
+                "y": 385
+        },
+        "startGame": true,
+        "endGame": true,
+        "message": {
+                "from": "james",
+                "to": [
+                        "zoe"
+                ],
+                "body": "endgame_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "",
+        "children": [],
+        "fallback": null,
+        "attachment": null
+}

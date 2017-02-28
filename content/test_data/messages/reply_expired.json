@@ -1,0 +1,24 @@
+{
+        "name": "reply_expired",
+        "threadSubject": "reply_expired_subject",
+        "position": {
+                "x": 440,
+                "y": 385
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "to": [
+                        "zoe"
+                ],
+                "body": "reply_expired_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "reply_expired_ro",
+        "children": [],
+        "fallback": null,
+        "attachment": null
+}

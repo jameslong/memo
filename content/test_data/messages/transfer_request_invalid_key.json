@@ -1,0 +1,21 @@
+{
+        "name": "transfer_request_invalid_key",
+        "threadSubject": "",
+        "position": {
+                "x": 1276,
+                "y": 825
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "body": "transfer_request_invalid_key_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "",
+        "children": [],
+        "fallback": null,
+        "attachment": null
+}

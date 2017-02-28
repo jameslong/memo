@@ -1,0 +1,32 @@
+{
+        "name": "delay_absolute_month",
+        "threadSubject": "delay_absolute_month_subject",
+        "position": {
+                "x": 1276,
+                "y": 55
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "body": "delay_absolute_month_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "",
+        "children": [
+                {
+                        "name": "delay_child_0",
+                        "condition": "",
+                        "delay": [
+                                35,
+                                11,
+                                27
+                        ],
+                        "absolute": true
+                }
+        ],
+        "fallback": null,
+        "attachment": null
+}

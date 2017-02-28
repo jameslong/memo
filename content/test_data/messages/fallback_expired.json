@@ -1,0 +1,33 @@
+{
+        "name": "fallback_expired",
+        "threadSubject": "fallback_expired_subject",
+        "position": {
+                "x": 440,
+                "y": 55
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "to": [
+                        "zoe"
+                ],
+                "body": "fallback_expired_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "fallback_expired_ro",
+        "children": [],
+        "fallback": {
+                "name": "fallback_0",
+                "condition": "",
+                "delay": [
+                        0,
+                        0,
+                        0
+                ],
+                "absolute": false
+        },
+        "attachment": null
+}

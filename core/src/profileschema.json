@@ -1,0 +1,26 @@
+{
+        "schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Profile",
+        "description": "A profile describing an NPC",
+        "type": "object",
+        "properties": {
+                "name": { "type": "string" },
+                "email": { "type": "string" },
+                "firstName": { "type": "string" },
+                "lastName": { "type": "string" },
+                "signature": { "type": "string" },
+                "publicKey": { "type": "string" },
+                "privateKey": { "type": "string" },
+                "passphrase": { "type": "string" }
+        },
+        "required": [
+                "name",
+                "email",
+                "firstName",
+                "lastName",
+                "signature",
+                "publicKey",
+                "privateKey",
+                "passphrase"
+        ]
+}

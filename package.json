@@ -1,0 +1,50 @@
+{
+  "name": "topsecret",
+  "version": "0.0.1",
+  "description": "A game about the Snowden leaks",
+  "main": "client/index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jameslong/topsecret.git"
+  },
+  "keywords": [
+    "topsecret",
+    "snowden"
+  ],
+  "author": "James Long",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jameslong/topsecret/issues"
+  },
+  "homepage": "https://github.com/jameslong/topsecret#readme",
+  "dependencies": {
+    "aws-sdk": "~2.3.17",
+    "basic-auth": "^1.0.4",
+    "body-parser": "^1.15.0",
+    "bunyan": "^1.8.1",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "express": "^4.13.4",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-shell": "^1.3.0",
+    "grunt-ts": "^5.3.2",
+    "is-my-json-valid": "^2.13.1",
+    "jquery": "^2.2.1",
+    "kbpgp": "^2.0.52",
+    "mailgun-js": "^0.7.7",
+    "mkdirp": "^0.5.1",
+    "mocha": "^2.4.5",
+    "multer": "^0.1.8",
+    "node-inspector": "^0.12.7",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "typescript": "^1.8.10"
+  },
+  "devDependencies": {}
+}

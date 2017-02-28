@@ -1,0 +1,32 @@
+{
+        "name": "delay_relative_month",
+        "threadSubject": "delay_relative_month_subject",
+        "position": {
+                "x": 1056,
+                "y": 55
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "body": "delay_relative_month_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "",
+        "children": [
+                {
+                        "name": "delay_child_0",
+                        "condition": "",
+                        "delay": [
+                                35,
+                                11,
+                                27
+                        ],
+                        "absolute": false
+                }
+        ],
+        "fallback": null,
+        "attachment": null
+}

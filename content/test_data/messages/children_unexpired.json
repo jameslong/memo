@@ -1,0 +1,45 @@
+{
+        "name": "children_unexpired",
+        "threadSubject": "children_unexpired_subject",
+        "position": {
+                "x": 220,
+                "y": 55
+        },
+        "startGame": false,
+        "endGame": false,
+        "message": {
+                "from": "james",
+                "to": [
+                        "zoe"
+                ],
+                "body": "children_unexpired_body"
+        },
+        "encrypted": true,
+        "script": "",
+        "receiver": null,
+        "replyOptions": "",
+        "children": [
+                {
+                        "name": "child_0",
+                        "condition": "",
+                        "delay": [
+                                100000000,
+                                0,
+                                0
+                        ],
+                        "absolute": false
+                },
+                {
+                        "name": "child_1",
+                        "condition": "",
+                        "delay": [
+                                100000000,
+                                0,
+                                0
+                        ],
+                        "absolute": false
+                }
+        ],
+        "fallback": null,
+        "attachment": null
+}

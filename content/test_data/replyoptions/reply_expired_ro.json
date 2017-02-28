@@ -1,0 +1,37 @@
+[
+        {
+                "type": "keyword",
+                "parameters": {
+                        "condition": "",
+                        "matches": [
+                                "reply"
+                        ]
+                },
+                "messageDelays": [
+                        {
+                                "name": "reply_0",
+                                "delay": [
+                                        0,
+                                        0,
+                                        0
+                                ],
+                                "absolute": false
+                        }
+                ]
+        },
+        {
+                "type": "default",
+                "parameters": {},
+                "messageDelays": [
+                        {
+                                "name": "reply_default",
+                                "delay": [
+                                        0,
+                                        0,
+                                        0
+                                ],
+                                "absolute": false
+                        }
+                ]
+        }
+]
