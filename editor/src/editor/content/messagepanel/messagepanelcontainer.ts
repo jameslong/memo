@@ -28,8 +28,6 @@ function renderMessagePanelContainer (props: MessagePanelContainerProps)
                 onSetStartGame(narrativeId, name, startGame     );
         const onSetEndGameLocal = (endGame: boolean) =>
                 onSetEndGame(narrativeId, name, endGame);
-        const onSetEncryptedLocal = (encrypted: boolean) =>
-                onSetEncrypted(narrativeId, name, encrypted);
         const onSetAttachmentLocal = (path: string) =>
                 onSetAttachment(narrativeId, name, path);
         const onSetScriptLocal = (script: string) =>
@@ -49,7 +47,6 @@ function renderMessagePanelContainer (props: MessagePanelContainerProps)
                 onSetString: onSetStringLocal,
                 onSetStartGame: onSetStartGameLocal,
                 onSetEndGame: onSetEndGameLocal,
-                onSetEncrypted: onSetEncryptedLocal,
                 onSetAttachment: onSetAttachmentLocal,
                 onSetScript: onSetScriptLocal,
                 onSetChildren: onSetChildrenLocal,
@@ -128,17 +125,6 @@ function onSetEndGame (
                 narrativeId,
                 name: messageName,
                 value: newEndGame,
-        });
-        Redux.handleAction(action);
-}
-
-function onSetEncrypted (
-        narrativeId: string, messageName: string, newEncrypted: boolean)
-{
-        const action = Actions.setMessageEncrypted({
-                narrativeId,
-                name: messageName,
-                value: newEncrypted,
         });
         Redux.handleAction(action);
 }

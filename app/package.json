@@ -1,7 +1,7 @@
 {
-  "name": "topsecret-desktop",
+  "name": "memo-desktop",
   "version": "0.1.0",
-  "description": "Desktop version of Top Secret",
+  "description": "Desktop version of Memo",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"

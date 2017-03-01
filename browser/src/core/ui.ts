@@ -7,7 +7,6 @@ export const Modes = {
         PAGER: 'PAGER',
         COMPOSE: 'COMPOSE',
         COMPOSE_BODY: 'COMPOSE_BODY',
-        ENCRYPTION: 'ENCRYPTION',
         FOLDER: 'FOLDER',
         HOW_TO_PLAY: 'HOW_TO_PLAY',
         LOAD_MENU: 'LOAD_MENU',
@@ -28,11 +27,7 @@ export interface UI {
         activeLoadIndex: number;
         editingDraftSubject: boolean;
         editingDraftTo: boolean;
-        editingDraftKeyName: boolean;
-        editingDraftKeyPassphrase: boolean;
         sending: boolean;
-        decrypting: boolean;
-        generatingKey: boolean;
         hasSeenInbox: boolean;
         loadingInfo: string[];
         showDebugInfo: boolean;
@@ -52,11 +47,7 @@ export function createUI (
                 activeLoadIndex: 0,
                 editingDraftSubject: false,
                 editingDraftTo: false,
-                editingDraftKeyName: false,
-                editingDraftKeyPassphrase: false,
                 sending: false,
-                decrypting: false,
-                generatingKey: false,
                 hasSeenInbox: false,
                 loadingInfo: [],
                 showDebugInfo: false
@@ -68,9 +59,7 @@ export function isEditing (ui: UI)
         return ui.mode === Modes.COMPOSE_BODY ||
                 ui.mode === Modes.NEW_GAME ||
                 ui.editingDraftTo ||
-                ui.editingDraftSubject ||
-                ui.editingDraftKeyName ||
-                ui.editingDraftKeyPassphrase;
+                ui.editingDraftSubject;
 }
 
 export function setMode (ui: UI, mode: string)

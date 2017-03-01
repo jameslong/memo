@@ -5,7 +5,6 @@ import DataValidation = require('./datavalidation');
 import DynamoDB = require('./dynamodb');
 import FileSystem = require('../../core/src/filesystem');
 import DBTypes = require('./../../core/src/dbtypes');
-import KBPGP = require('./../../core/src/kbpgp');
 import Helpers = require('./../../core/src/utils/helpers');
 import LocalDB = require('../../core/src/localdb');
 import Log = require('./../../core/src/log');
@@ -82,9 +81,7 @@ export function createGameState (
                         resolve(narrativeData)
         );
 
-        return promise.then(narrativeData =>
-                Data.initKeyManagers(narrativeData)
-        ).then(gameData =>
+        return promise.then(gameData =>
                 onGameData(config, server, gameData)
         ).catch(err => {
                 Log.error(err, 'createGameState');

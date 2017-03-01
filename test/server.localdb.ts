@@ -34,9 +34,9 @@ describe('DB', function () {
                 it('should return the updated player', function () {
                         const db = TestHelpers.createDB();
                         const player = TestHelpers.createPlayer0();
-                        const publicKey = 'asdfadf';
+                        const utcOffset = player.utcOffset + 1;
                         const modifiedPlayer = Helpers.assign(
-                                player, { publicKey });
+                                player, { utcOffset });
 
                         const promise = db.addPlayer(player).then(player =>
                                 db.updatePlayer(modifiedPlayer)

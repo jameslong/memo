@@ -1,5 +1,5 @@
 {
-  "name": "topsecret",
+  "name": "memo",
   "version": "0.0.1",
   "description": "A game about the Snowden leaks",
   "main": "client/index.js",
@@ -8,18 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jameslong/topsecret.git"
+    "url": "git+https://github.com/jameslong/memo.git"
   },
   "keywords": [
-    "topsecret",
-    "snowden"
+    "memo"
   ],
   "author": "James Long",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/jameslong/topsecret/issues"
+    "url": "https://github.com/jameslong/memo/issues"
   },
-  "homepage": "https://github.com/jameslong/topsecret#readme",
+  "homepage": "https://github.com/jameslong/memo#readme",
   "dependencies": {
     "aws-sdk": "~2.3.17",
     "basic-auth": "^1.0.4",

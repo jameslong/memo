@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/kbpgp/kbpgp.d.ts"/>
-
 import Client = require('../client');
 import Map = require('../../../../core/src/utils/map');
 import MessageCore = require('../../../../core/src/message');
@@ -28,8 +26,6 @@ export const Types = {
         RECEIVE_REPLY: 'RECEIVE_REPLY',
         SEND_MESSAGE: 'SEND_MESSAGE',
         SENDING_MESSAGE: 'SENDING_MESSAGE',
-        DECRYPT_MESSAGE: 'DECRYPT_MESSAGE',
-        DECRYPTING_MESSAGE: 'DECRYPTING_MESSAGE',
         SET_ACTIVE_FOLDER: 'SET_ACTIVE_FOLDER',
         DISPLAY_FOLDER: 'DISPLAY_FOLDER',
         EDIT_BODY: 'EDIT_BODY',
@@ -170,17 +166,6 @@ type SendingMessageParams = boolean;
 export interface SendingMessage extends Redux.Action<SendingMessageParams> {}
 export const sendingMessage = createActionCreator<SendingMessageParams>(Types.SENDING_MESSAGE);
 
-export interface DecryptMessageParams {
-        messageId: string;
-        decryptedBody: string;
-}
-export interface DecryptMessage extends Redux.Action<DecryptMessageParams> {}
-export const decryptMessage = createActionCreator<DecryptMessageParams>(Types.DECRYPT_MESSAGE);
-
-type DecryptingMessageParams = boolean;
-export interface DecryptingMessage extends Redux.Action<DecryptingMessageParams> {}
-export const decryptingMessage = createActionCreator<DecryptingMessageParams>(Types.DECRYPTING_MESSAGE);
-
 export interface DisplayFolderParams {
         folderId: string;
         messageId: string;
@@ -192,10 +177,6 @@ export const displayFolder = createActionCreator<DisplayFolderParams>(Types.DISP
 type SetActiveKeyIndexParams = number;
 export interface SetActiveKeyIndex extends Redux.Action<SetActiveKeyIndexParams> {}
 export const setActiveKeyIndex = createActionCreator<SetActiveKeyIndexParams>(Types.SET_ACTIVE_KEY_INDEX);
-
-export type ImportKeysParams = string[];
-export interface ImportKeys extends Redux.Action<ImportKeysParams> {}
-export const importKeys = createActionCreator<ImportKeysParams>(Types.IMPORT_KEYS);
 
 type SetActiveLoadIndexParams = number;
 export interface SetActiveLoadIndex extends Redux.Action<SetActiveLoadIndexParams> {}

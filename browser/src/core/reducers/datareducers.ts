@@ -22,14 +22,6 @@ export function data (data: Data.Data, action: Redux.Action<any>)
                         const sendAction = <Actions.SendMessage><any>action;
                         return handleSendMessage(data, sendAction);
 
-                case Actions.Types.DECRYPT_MESSAGE:
-                        const decryptAction = <Actions.DecryptMessage><any>action;
-                        return handleDecryptMessage(data, decryptAction);
-
-                case Actions.Types.IMPORT_KEYS:
-                        const importKeys = <Actions.ImportKeys><any>action;
-                        return handleImportKeys(data, importKeys);
-
                 case Actions.Types.TICK:
                         const tick = <Actions.Tick><any>action;
                         return handleTick(data, tick);
@@ -89,24 +81,6 @@ function handleSendMessage (data: Data.Data, action: Actions.SendMessage)
         }
 
         return Data.storeMessage(tempData, message, 'sent');
-}
-
-function handleDecryptMessage (data: Data.Data, action: Actions.DecryptMessage)
-{
-        const parameters = action.parameters;
-        const messageId = parameters.messageId;
-        const body = parameters.decryptedBody;
-        const message = data.messagesById[messageId];
-        const newMessage = Helpers.assign(message, { body });
-        return Data.updateMessage(data, newMessage);
-}
-
-function handleImportKeys (data: Data.Data, action: Actions.ImportKeys)
-{
-        const newKeyIds = action.parameters;
-        const keyIds = data.knownKeyIds.concat(newKeyIds);
-        const knownKeyIds = Arr.unique(keyIds);
-        return Helpers.assign(data, { knownKeyIds });
 }
 
 function handleTick (data: Data.Data, action: Actions.Tick)

@@ -1,8 +1,6 @@
 import Actions = require('../../actions/actions');
 import ButtonInput = require('../common/buttoninput');
 import Client = require('../../client');
-import Kbpgp = require('kbpgp');
-import KbpgpHelpers = require('../../../../../core/src/kbpgp');
 import Prom = require('../../../../../core/src/utils/promise');
 import React = require('react');
 import Redux = require('../../redux/redux');
@@ -83,17 +81,6 @@ function onSubmit (state: Client.Client, e: any)
                 <{ firstName: string; lastName: string; }> extractFormValues(e);
 
         if (firstName && lastName) {
-                const userId = `${firstName} ${lastName} <${firstName.toLowerCase()}.${lastName.toLowerCase()}@nsa.gov>`;
-                const passphrase = `passphrase`;
-                const asp = new Kbpgp.ASP({
-                        progress_hook: (info) => {
-                                const text = KbpgpHelpers.formatProgress(info);
-                                const action = Actions.newGameLoadingInfo(
-                                        text);
-                                Redux.handleAction(action);
-                        }
-                });
-
                 const connecting = Prom.delay(100).then(res => {
                         const action = Actions.newGameLoadingInfo(
                                 'connecting to NSA network...');
@@ -102,26 +89,16 @@ function onSubmit (state: Client.Client, e: any)
                         const action = Actions.newGameLoadingInfo(
                                 'connection successful');
                         Redux.handleAction(action);
-                }).then(res => Prom.delay(500)).then(res => {
-                        const action = Actions.newGameLoadingInfo(
-                                'generating PGP key pair...');
-                        Redux.handleAction(action);
                 }).then(res => Prom.delay(1500)).then(res => {
-                        KbpgpHelpers.generateKeyPair(userId, asp).then(instance => {
-                                return KbpgpHelpers.exportKeyPair(instance, passphrase);
-                        }).then(keyPair => {
-                                const player = {
-                                        email: userId,
-                                        firstName,
-                                        lastName,
-                                        timezoneOffset: 0,
-                                        publicKey: keyPair[0],
-                                        privateKey: keyPair[1],
-                                        passphrase,
-                                };
-                                const action = Actions.newGame(player);
-                                Redux.handleAction(action);
-                        });
+                        const userId = `${firstName} ${lastName} <${firstName.toLowerCase()}.${lastName.toLowerCase()}@nsa.gov>`;
+                        const player = {
+                                email: userId,
+                                firstName,
+                                lastName,
+                                timezoneOffset: 0
+                        };
+                        const action = Actions.newGame(player);
+                        Redux.handleAction(action);
                 });
 
                 const action = Actions.newGameLogin();

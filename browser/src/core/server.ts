@@ -92,13 +92,13 @@ export function beginGame (
         server: Server,
         clock: Clock.Clock)
 {
-        const { email, publicKey, firstName, lastName, timezoneOffset } = playerData;
+        const { email, firstName, lastName, timezoneOffset } = playerData;
         const { version, beginGameMessage } = settings;
 
         const timestampMs = Clock.gameTimeMs(clock);
 
         const player = Player.createPlayerState(
-                email, publicKey, version, firstName, lastName, timezoneOffset);
+                email, version, firstName, lastName, timezoneOffset);
         player.vars['utcStartDate'] = (settings.day !== null ?
                 timestampMs - (settings.day * 24 * 3600 * 1000) :
                 player.vars['utcStartDate']);

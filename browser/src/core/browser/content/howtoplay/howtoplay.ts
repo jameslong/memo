@@ -29,7 +29,7 @@ function renderHowToPlay(props: HowToPlayProps)
 
         const playByEmailHeader = P({ className: 'how-to-play-header' }, `Play by email`);
         const playByEmail = P({},
-                `To play by email, send a completed copy of the form below to careers@nsa.playtopsecret.com.`,
+                `To play by email, send a completed copy of the form below to careers@mydomain.com.`,
                 Br({}),
                 Br({}),
                 `---- NSA Internal Transfer Request Form ---`,
@@ -38,8 +38,6 @@ function renderHowToPlay(props: HowToPlayProps)
                 `First Name:`,
                 Br({}),
                 `Last Name:`,
-                Br({}),
-                `Use PGP Encryption (Y/N):`,
                 Br({}),
                 `UTC offset (hours): 0`,
                 Br({}),

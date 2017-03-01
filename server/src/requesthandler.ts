@@ -173,7 +173,6 @@ export function beginDemo (state: App.State, req: any, res: any)
         const playerData = {
                 firstName: firstName,
                 lastName: lastName,
-                usePGP: false,
                 utcOffset,
                 key: '',
         };
@@ -211,13 +210,11 @@ export function addPlayer (state: App.State, req: any, res: any)
 {
         const data: {
                 email: string;
-                publicKey: string;
                 firstName: string;
                 lastName: string;
                 timezoneOffset: number;
                 } = req.body;
         const email = data.email;
-        const publicKey = (data.publicKey || null);
         const firstName = data.firstName;
         const lastName = data.lastName;
         const timezoneOffset = data.timezoneOffset;
@@ -228,7 +225,6 @@ export function addPlayer (state: App.State, req: any, res: any)
         const version = state.config.content.defaultNarrativeGroup;
         const player = Player.createPlayerState(
                 email,
-                publicKey,
                 version,
                 firstName,
                 lastName,
@@ -620,13 +616,12 @@ export function beginGame (
         const app = state.game;
         const promises = app.promises;
 
-        const publicKey: string = null;
         const firstName = playerData.firstName;
         const lastName = playerData.lastName;
         const version = state.config.content.defaultNarrativeGroup;
         const utcOffset = playerData.utcOffset;
         const player = Player.createPlayerState(
-                email, publicKey, version, firstName, lastName, utcOffset);
+                email, version, firstName, lastName, utcOffset);
         const timestampMs = Clock.gameTimeMs(state.clock);
 
         return Promises.beginGame(
@@ -671,7 +666,6 @@ export function handleCareersEmail (
                         playerEmail: email,
                         firstName: playerData.firstName,
                         lastName: playerData.lastName,
-                        usePGP: playerData.usePGP,
                         utcOffset: playerData.utcOffset,
                         securityKey: playerData.key,
                 });
@@ -725,9 +719,7 @@ export function handleValidApplication (
 {
         const config = state.config;
 
-        const initialThreadMessage = playerData.usePGP ?
-                config.content.validApplicationThreadPGP :
-                config.content.validApplicationThread;
+        const initialThreadMessage = config.content.validApplicationThread;
 
         return beginGame(
                 state,
@@ -778,7 +770,6 @@ export function isCareersEmail (to: string): boolean
 export interface PlayerApplicationData {
         firstName: string;
         lastName: string;
-        usePGP: boolean;
         utcOffset: number;
         key: string;
 }
@@ -788,15 +779,12 @@ export function extractPlayerData (applicationText: string)
 {
         const firstNameLabel = 'First Name:';
         const lastNameLabel = 'Last Name:';
-        const pgpLabel = 'Use PGP Encryption (Y/N):';
         const timezoneLabel = 'UTC offset (hours):';
         const keyLabel = 'Security Key:';
         applicationText = applicationText || '';
 
         const firstName = extractFormField(applicationText, firstNameLabel);
         const lastName = extractFormField(applicationText, lastNameLabel);
-        const pgp = extractFormField(applicationText, pgpLabel);
-        const usePGP = (pgp && pgp.toLowerCase().indexOf('y') !== -1);
         const timeOffset = extractFormField(applicationText, timezoneLabel);
         const validOffset = timeOffset && !isNaN(<number><any>timeOffset);
         const utcOffset = validOffset ? parseInt(timeOffset) : 0;
@@ -805,7 +793,6 @@ export function extractPlayerData (applicationText: string)
         return {
                 firstName,
                 lastName,
-                usePGP,
                 utcOffset,
                 key,
         };

@@ -6,9 +6,6 @@ export interface Profile {
         firstName: string;
         lastName: string;
         signature: string;
-        publicKey: string;
-        privateKey: string;
-        passphrase: string;
 }
 export type Profiles = Map.Map<Profile>;
 

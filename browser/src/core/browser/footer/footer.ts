@@ -100,8 +100,6 @@ function createStatusBarContent (state: Client.Client): React.ReactElement<any>
                 return EditTo({ value: message.to });
         } else if (state.ui.sending) {
                 return Span({ className: 'statusbar-ongoing' }, 'Sending');
-        } else if (state.ui.decrypting) {
-                return Span({ className: 'statusbar-ongoing' }, 'Decrypting');
         } else {
                 // Ensures 'empty' status bar has the same height as filled one
                 return Span({ className: 'statusbar-empty'}, '.');

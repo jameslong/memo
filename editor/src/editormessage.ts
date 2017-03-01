@@ -25,7 +25,6 @@ export function convertToMessage (data: Message.ThreadMessage): EditorMessage
                 startGame: data.startGame,
                 endGame: data.endGame,
                 message: data.message,
-                encrypted: data.encrypted,
                 script: data.script,
                 receiver: data.receiver,
                 replyOptions: data.replyOptions,

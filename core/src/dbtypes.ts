@@ -1,4 +1,3 @@
-import Kbpgp = require('./kbpgp');
 import Message = require('./message');
 import Player = require('./player');
 import Prom = require('./utils/promise');

@@ -11,7 +11,6 @@ import Client = require('./client');
 import Clock = require('../../../core/src/clock');
 import Data = require('./data');
 import EventHandler = require('./eventhandler');
-import KbpgpHelpers = require('../../../core/src/kbpgp');
 import Helpers = require('../../../core/src/utils/helpers');
 import LocalStorage = require('./localstorage');
 import Prom = require('../../../core/src/utils/promise');

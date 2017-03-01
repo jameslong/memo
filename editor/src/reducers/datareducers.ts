@@ -72,10 +72,6 @@ export function data (
                 const setEndGame = <Actions.SetMessageEndGame><any>action;
                 return handleSetMessageEndGame(state, config, setEndGame);
 
-        case Actions.Types.SET_MESSAGE_ENCRYPTED:
-                const setEncrypted = <Actions.SetMessageEncrypted><any>action;
-                return handleSetMessageEncrypted(state, config, setEncrypted);
-
         case Actions.Types.SET_MESSAGE_ATTACHMENT:
                 const setAttachment = <Actions.SetMessageAttachment><any>action;
                 return handleSetMessageAttachment(state, config, setAttachment);
@@ -248,7 +244,6 @@ function handleCreateMessage (
                         from: '',
                         body: '',
                 },
-                encrypted: true,
                 script: '',
                 receiver: null,
                 replyOptions: '',
@@ -587,20 +582,6 @@ function handleSetMessageEndGame (
         return setMessageProperty(
                 parameters.name,
                 'endGame',
-                parameters.value,
-                parameters.narrativeId,
-                state);
-}
-
-function handleSetMessageEncrypted (
-        state: State.Data,
-        config: State.Config,
-        action: Actions.SetMessageEncrypted)
-{
-        const parameters = action.parameters;
-        return setMessageProperty(
-                parameters.name,
-                'encrypted',
                 parameters.value,
                 parameters.narrativeId,
                 state);

@@ -12,18 +12,17 @@ Chai.use(ChaiAsPromised);
 describe('Promises', function () {
         describe('beginGame', function () {
                 it('should resolve without error', function () {
-                        return TestHelpers.testGameData().then(groupData => {
-                                const player = TestHelpers.createPlayer0();
-                                const promises = TestHelpers.createPromises();
-                                const timestampMs = Date.now();
+                        const gameData = TestHelpers.testGameData();
+                        const player = TestHelpers.createPlayer0();
+                        const promises = TestHelpers.createPromises();
+                        const timestampMs = Date.now();
 
-                                return Promises.beginGame(
-                                        'begingame',
-                                        player,
-                                        timestampMs,
-                                        groupData,
-                                        promises);
-                        });
+                        return Promises.beginGame(
+                                'begingame',
+                                player,
+                                timestampMs,
+                                gameData,
+                                promises);
                 })
         });
 
@@ -60,20 +59,19 @@ describe('Promises', function () {
                         const childIndex = 0;
                         const timestampMs = Date.now();
 
-                        return TestHelpers.testGameData().then(narrative => {
-                                const message = TestHelpers.createMessage(
-                                        'children_expired',
-                                        player.email,
-                                        narrative);
-                                const state = {
-                                        player,
-                                        message,
-                                        timestampMs,
-                                        narrative,
-                                        promises,
-                                };
-                                return Promises.child(state, childIndex);
-                        });
+                        const narrative = TestHelpers.testGameData();
+                        const message = TestHelpers.createMessage(
+                                'children_expired',
+                                player.email,
+                                narrative);
+                        const state = {
+                                player,
+                                message,
+                                timestampMs,
+                                narrative,
+                                promises,
+                        };
+                        return Promises.child(state, childIndex);
                 })
         });
 
@@ -83,27 +81,26 @@ describe('Promises', function () {
                         const promises = TestHelpers.createPromises();
                         const replyIndex = 0;
                         const timestampMs = Date.now();
+                        const narrative = TestHelpers.testGameData();
 
-                        return TestHelpers.testGameData().then(narrative => {
-                                const message = TestHelpers.createMessage(
-                                        'reply_expired',
-                                        player.email,
-                                        narrative);
-                                message.reply = {
-                                        body: '',
-                                        timestampMs: 0,
-                                        index: replyIndex,
-                                        sent: [],
-                                };
-                                const state = {
-                                        player,
-                                        message,
-                                        timestampMs,
-                                        narrative,
-                                        promises,
-                                };
-                                return Promises.reply(state, replyIndex)
-                        });
+                        let message = TestHelpers.createMessage(
+                                'reply_expired',
+                                player.email,
+                                narrative);
+                        message.reply = {
+                                body: '',
+                                timestampMs: 0,
+                                index: replyIndex,
+                                sent: [],
+                        };
+                        const state = {
+                                player,
+                                message,
+                                timestampMs,
+                                narrative,
+                                promises,
+                        };
+                        return Promises.reply(state, replyIndex)
                 })
         });
 });

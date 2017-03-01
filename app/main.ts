@@ -10,12 +10,9 @@ import State = require('../core/src/gamestate');
 window.onload = () => {
         const resources = (<any>process)['resourcesPath'];
         const path = `${resources}/app/build/content`;
-        const data = Data.loadNarrativeData(path);
-        const tasks = data.map(narrative => State.addKeyManagers(narrative));
+        const data = Helpers.mapFromNameArray(Data.loadNarrativeData(path));
 
-        Promise.all(tasks).then(data =>
-                Helpers.mapFromNameArray(data)
-        ).then(narratives => {
+        Promise.resolve(data).then(narratives => {
                 const openFile = (path: string) => shell.openItem(path);
                 const openExternal = (path: string) => shell.openExternal(path);
                 Main.init(narratives, openFile, openExternal);

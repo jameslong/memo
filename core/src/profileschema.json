@@ -8,19 +8,13 @@
                 "email": { "type": "string" },
                 "firstName": { "type": "string" },
                 "lastName": { "type": "string" },
-                "signature": { "type": "string" },
-                "publicKey": { "type": "string" },
-                "privateKey": { "type": "string" },
-                "passphrase": { "type": "string" }
+                "signature": { "type": "string" }
         },
         "required": [
                 "name",
                 "email",
                 "firstName",
                 "lastName",
-                "signature",
-                "publicKey",
-                "privateKey",
-                "passphrase"
+                "signature"
         ]
 }

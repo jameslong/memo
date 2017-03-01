@@ -1,13 +1,12 @@
 import Arr = require('./utils/array');
 import Message = require('./message');
 
-export type ReplyOption = ReplyOptionKeyword | ReplyOptionValidPGPKey | ReplyOptionDefault;
+export type ReplyOption = ReplyOptionKeyword | ReplyOptionDefault;
 export type ReplyOptions = ReplyOption[];
 
 export const ReplyOptionType = {
         Default: 'default',
         Keyword: 'keyword',
-        ValidPGPKey: 'validPGPKey',
 }
 
 export interface ReplyOptionBase<T> {
@@ -21,7 +20,6 @@ interface KeywordParameters {
         matches: string[];
 }
 export interface ReplyOptionKeyword extends ReplyOptionBase<KeywordParameters> {}
-export interface ReplyOptionValidPGPKey extends ReplyOptionBase<{}> {}
 export interface ReplyOptionDefault extends ReplyOptionBase<{}>{}
 
 export function createReplyOptionKeyword (): ReplyOptionKeyword
@@ -39,13 +37,11 @@ export function createReplyOptionKeyword (): ReplyOptionKeyword
 export function isReplyOptionType (type: string)
 {
         return (type === ReplyOptionType.Default ||
-                type === ReplyOptionType.Keyword ||
-                type === ReplyOptionType.ValidPGPKey);
+                type === ReplyOptionType.Keyword);
 }
 
 export function getReplyOptionTypes ()
 {
         return [ReplyOptionType.Default,
-                ReplyOptionType.Keyword,
-                ReplyOptionType.ValidPGPKey];
+                ReplyOptionType.Keyword];
 }

@@ -32,7 +32,6 @@ interface MessagePanelProps extends React.Props<any> {
         onSetString: (name: string, value: string) => void;
         onSetStartGame: (startGame: boolean) => void;
         onSetEndGame: (endGame: boolean) => void;
-        onSetEncrypted: (encrypted: boolean) => void;
         onSetAttachment: (attachment: string) => void;
         onSetScript: (script: string) => void;
         onSetChildren: (delays: Message.ThreadDelay[]) => void;
@@ -79,7 +78,6 @@ function renderMessagePanel (props: MessagePanelProps)
 
         const startGame = createStartGame(message, props.onSetStartGame);
         const endGame = createEndGame(message, props.onSetEndGame);
-        const encrypted = createEncrypted(message, props.onSetEncrypted);
         const attachment = createAttachment(
                 message, attachments, props.onSetAttachment);
         const script = createScript(message, props.onSetScript);
@@ -100,8 +98,7 @@ function renderMessagePanel (props: MessagePanelProps)
                 ComponentHelpers.wrapInTitleGroup('Attachment', attachment),
                 ComponentHelpers.wrapInTitleGroup('Script', script),
                 ComponentHelpers.wrapInGroup(
-                        ComponentHelpers.wrapInSubgroup(
-                                startGame, endGame, encrypted)
+                        ComponentHelpers.wrapInSubgroup(startGame, endGame)
                 )
         );
 
@@ -204,18 +201,6 @@ function createEndGame (
         };
         return ComponentHelpers.wrapInLabel(
                 'End game', Checkbox(newEndGameProps));
-}
-
-function createEncrypted (
-        message: EditorMessage.EditorMessage,
-        onSetEncrypted: (encrypted: boolean) => void)
-{
-        const newEncryptedProps = {
-                checked: message.encrypted,
-                onChange: onSetEncrypted,
-        };
-        return ComponentHelpers.wrapInLabel(
-                'Encrypted', Checkbox(newEncryptedProps));
 }
 
 function createAttachment (

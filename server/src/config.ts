@@ -27,7 +27,6 @@ export interface ConfigState {
                 narrativeFolder: string;
                 defaultNarrativeGroup: string;
                 validApplicationThread: string;
-                validApplicationThreadPGP: string;
                 invalidApplicationThread: string;
                 invalidApplicationMissingFirstNameThread: string;
                 invalidApplicationMissingLastNameThread: string;
@@ -58,8 +57,8 @@ export function loadCredentials(path: string)
         return credentials;
 }
 
-const htmlFooter = `<br><div style="border-top:1px solid #CCCCCC; font-size:12px;"><p>This message is part of Top Secret, a story you signed up for.</p><p>To stop playing, email careers@nsa.playtopsecret.com with the word 'resign' in the subject line.</p></div>`;
-const textFooter = `\n\n-----\nThis message is part of Top Secret, a story you signed up for. To stop playing, email careers@nsa.playtopsecret.com with the word 'resign' in the subject line.`;
+const htmlFooter = `<br><div style="border-top:1px solid #CCCCCC; font-size:12px;"><p>To stop playing, email careers@mydomain.com with the word 'resign' in the subject line.</p></div>`;
+const textFooter = `\n\n-----\nTo stop playing, email careers@mydomain.com with the word 'resign' in the subject line.`;
 
 const debugConfig: ConfigState = {
         port: '3000',
@@ -75,15 +74,14 @@ const debugConfig: ConfigState = {
         updateIntervalMs: 1000,
         content: {
                 validApplicationThread: 'transfer_request_valid',
-                validApplicationThreadPGP: 'transfer_request_valid_pgp',
                 invalidApplicationThread: 'transfer_request_invalid',
                 invalidApplicationMissingFirstNameThread: 'transfer_request_missing_first_name',
                 invalidApplicationMissingLastNameThread: 'transfer_request_missing_last_name',
                 invalidApplicationMissingKeyThread: 'transfer_request_missing_key',
                 invalidApplicationInvalidKeyThread: 'transfer_request_invalid_key',
                 resignationThread: 'resign',
-                narrativeFolder: '../../topsecret-content/game',
-                defaultNarrativeGroup: '2',
+                narrativeFolder: '../content',
+                defaultNarrativeGroup: '',
                 messageSchemaPath: '../core/src/messageschema.json',
                 profileSchemaPath: '../core/src/profileschema.json',
                 replyOptionSchemaPath: '../core/src/replyoptionschema.json',
@@ -107,15 +105,14 @@ const releaseConfig: ConfigState = {
         updateIntervalMs: 1000,
         content: {
                 validApplicationThread: 'transfer_request_valid',
-                validApplicationThreadPGP: 'transfer_request_valid_pgp',
                 invalidApplicationThread: 'transfer_request_invalid',
                 invalidApplicationMissingFirstNameThread: 'transfer_request_missing_first_name',
                 invalidApplicationMissingLastNameThread: 'transfer_request_missing_last_name',
                 invalidApplicationMissingKeyThread: 'transfer_request_missing_key',
                 invalidApplicationInvalidKeyThread: 'transfer_request_invalid_key',
                 resignationThread: 'resign',
-                narrativeFolder: '../../topsecret-content/game',
-                defaultNarrativeGroup: '2',
+                narrativeFolder: '../content',
+                defaultNarrativeGroup: 'test_data',
                 messageSchemaPath: '../core/src/messageschema.json',
                 profileSchemaPath: '../core/src/profileschema.json',
                 replyOptionSchemaPath: '../core/src/replyoptionschema.json',

@@ -1,5 +1,4 @@
 import DBTypes = require('./dbtypes');
-import KbpgpHelpers = require('./kbpgp');
 import Log = require('./log');
 import Main = require('./main');
 import Message = require('./message');
@@ -29,7 +28,7 @@ export function child (state: UpdateState, childIndex: number)
         const quotedReply = '';
 
         const send = !condition || Script.executeScript(condition, player, timestampMs) ?
-                encryptSendStoreChild(
+                sendStoreChild(
                         name,
                         threadStartName,
                         inReplyToId,
@@ -58,7 +57,7 @@ export function reply (state: UpdateState, index: number)
         const replyDelay = replyOptions[message.reply.index].messageDelays[index];
         const name = replyDelay.name;
 
-        const send = encryptSendStoreChild(
+        const send = sendStoreChild(
                 name,
                 threadStartName,
                 inReplyToId,
@@ -87,7 +86,7 @@ export function fallback (state: UpdateState)
         const quotedReply = '';
 
         const send = !condition || Script.executeScript(condition, player, timestampMs) ?
-                encryptSendStoreChild(
+                sendStoreChild(
                         name,
                         threadStartName,
                         inReplyToId,
@@ -104,7 +103,7 @@ export function fallback (state: UpdateState)
         });
 }
 
-export function encryptSendStoreChild (
+export function sendStoreChild (
         name: string,
         threadStartName: string,
         inReplyToId: string,
@@ -123,19 +122,8 @@ export function encryptSendStoreChild (
                 quotedReply);
 
         const messageData = groupData.messages[name];
-        const from = groupData.keyManagers[messageData.message.from];
 
-        const encrypt = player.publicKey && messageData.encrypted ?
-                KbpgpHelpers.loadKey(player.publicKey).then(to => {
-                        const encryptData = { from, to, text: data.body };
-                        return KbpgpHelpers.signEncrypt(encryptData);
-                }) :
-                Promise.resolve(data.body);
-
-        return encrypt.then(body => {
-                data.body = body;
-                return promises.send(data);
-        }).then(id => {
+        return promises.send(data).then(id => {
                 const messageState = createMessageState(
                         groupData,
                         player.email,
@@ -212,7 +200,7 @@ export function beginGame (
         });
 
         return promises.addPlayer(player).then(result =>
-                encryptSendStoreChild(
+                sendStoreChild(
                         name,
                         threadStartName,
                         inReplyToId,

@@ -54,7 +54,7 @@
                                                                                 "s3:ListBucket"
                                                                         ],
                                                                         "Resource": [
-                                                                                "arn:aws:s3:::topsecret-deploy"
+                                                                                "arn:aws:s3:::memo-deploy"
                                                                         ]
                                                                 },
                                                                 {
@@ -63,7 +63,7 @@
                                                                                 "s3:GetObject"
                                                                         ],
                                                                         "Resource": [
-                                                                                "arn:aws:s3:::topsecret-deploy/*"
+                                                                                "arn:aws:s3:::memo-deploy/*"
                                                                         ]
                                                                 }
                                                         ]
@@ -128,12 +128,12 @@
                                                         "yum -y update",
                                                         "curl --silent --location https://rpm.nodesource.com/setup_4.x | bash -",
                                                         "yum -y install nodejs",
-                                                        "aws s3 cp s3://topsecret-deploy ./ --recursive",
-                                                        "unzip -o topsecret.zip",
+                                                        "aws s3 cp s3://memo-deploy ./ --recursive",
+                                                        "unzip -o memo.zip",
                                                         "curl https://s3.amazonaws.com/aws-cloudwatch/downloads/latest/awslogs-agent-setup.py -O",
                                                         "chmod +x ./awslogs-agent-setup.py",
-                                                        "./awslogs-agent-setup.py -n -r us-east-1 -c topsecret/server/awslogs.cfg",
-                                                        "cd topsecret/server",
+                                                        "./awslogs-agent-setup.py -n -r us-east-1 -c memo/server/awslogs.cfg",
+                                                        "cd memo/server",
                                                         "node build/server/src/main.js"
                                                 ] ]
                                         }

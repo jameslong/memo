@@ -7,8 +7,6 @@ import Draft = require('../draft');
 import Folder = require('../folder');
 import Func = require('../../../../core/src/utils/function');
 import Helpers = require('../../../../core/src/utils/helpers');
-import Kbpgp = require('kbpgp');
-import KbpgpHelpers = require('../../../../core/src/kbpgp');
 import LocalStorage = require('../localstorage');
 import MathUtils = require('../../../../core/src/utils/math');
 import Map = require('../../../../core/src/utils/map');
@@ -188,11 +186,6 @@ export function help (client: Client.Client)
         return Actions.setMode(UI.Modes.HELP);
 }
 
-export function encryption (client: Client.Client)
-{
-        return Actions.setMode(UI.Modes.ENCRYPTION);
-}
-
 export function displayMessage (client: Client.Client)
 {
         return Actions.displayMessage(client.ui.activeMessageId);
@@ -235,7 +228,7 @@ export function exitHelp (client: Client.Client)
         return Actions.setMode(mode);
 }
 
-export function encryptSend (client: Client.Client): Redux.Action<any>
+export function send (client: Client.Client): Redux.Action<any>
 {
         const draft = client.draftMessage;
         const id = Client.nextMessageId(client, draft.content.from);
@@ -245,42 +238,14 @@ export function encryptSend (client: Client.Client): Redux.Action<any>
         const reply = Draft.createReplyFromDraft(draft, id, inReplyToId);
         const data = client.data;
         const timestampMs = Clock.gameTimeMs(client.data.clock);
+        const app = client.server.app;
 
-        const player = data.player;
-        const playerKeyData = {
-                id: player.email,
-                key: player.privateKey,
-                passphrase: player.passphrase,
-        };
-
-        const to = reply.to;
-        const profilesById = data.profilesById;
-        const toProfile = Map.valueOf(profilesById, profile => {
-                return profile.email === to;
-        });
-        const toKeyData = {
-                id: toProfile.name,
-                key: toProfile.publicKey,
-        };
-        const keyData = [playerKeyData, toKeyData];
-
-        KbpgpHelpers.loadKeys(keyData).then(instances => {
-                const encryptData = {
-                        from: instances[0],
-                        to: instances[1],
-                        text: reply.strippedBody,
-                };
-                return KbpgpHelpers.signEncrypt(encryptData);
-        }).then(body => {
-                const encryptedReply = Helpers.assign(reply,
-                        { strippedBody: body, body });
-                const app = client.server.app;
-                return PromisesReply.handleReplyMessage(
-                        encryptedReply,
-                        timestampMs,
-                        app.narratives,
-                        app.promises).then(result => reply)
-        }).then(reply => {
+        PromisesReply.handleReplyMessage(
+                reply,
+                timestampMs,
+                app.narratives,
+                app.promises)
+        .then(result => {
                 const message = Draft.createMessageFromReply(reply, timestampMs);
                 const action = Actions.sendMessage({
                         message, parentId: inReplyToId });
@@ -299,47 +264,6 @@ export function openAttachment (client: Client.Client): Redux.Action<any>
         }
 
         return null;
-}
-
-export function decrypt (client: Client.Client): Redux.Action<any>
-{
-        const messageId = client.ui.activeMessageId;
-        const message = client.data.messagesById[messageId];
-        const body = message.body;
-        const knownKeyIds = client.data.knownKeyIds;
-        const profilesById = client.data.profilesById;
-        const knownKeyData = knownKeyIds.map(id => {
-                return {
-                        id,
-                        key: profilesById[id].publicKey,
-                };
-        });
-        const player = client.data.player;
-        const playerKeyData = {
-                id: player.email,
-                key: player.privateKey,
-                passphrase: player.passphrase,
-        };
-        knownKeyData.push(playerKeyData);
-
-        KbpgpHelpers.loadKeys(knownKeyData).then(instances => {
-                const keyRing = KbpgpHelpers.createKeyRing(instances);
-                return KbpgpHelpers.decryptVerify(keyRing, body);
-        }).then(decryptedBody => {
-                const action = Actions.decryptMessage({
-                        messageId, decryptedBody
-                });
-                Redux.handleAction(action);
-        }).catch(err => {
-                console.log(err);
-                const action = Actions.decryptMessage({
-                        messageId,
-                        decryptedBody: body
-                });
-                Redux.handleAction(action);
-        });
-
-        return Actions.decryptingMessage(true);
 }
 
 export function folder (client: Client.Client)
@@ -431,19 +355,6 @@ export function previousKey (client: Client.Client)
         const ids = client.data.profiles;
         const nextIndex = MathUtils.inRange(0, ids.length - 1, index - 1);
         return Actions.setActiveKeyIndex(nextIndex);
-}
-
-export function importKeys (client: Client.Client): Redux.Action<any>
-{
-        const body = Client.getActiveMessage(client).body;
-        const armouredKeys = KbpgpHelpers.extractPublicKeys(body);
-        const profiles = client.data.profiles;
-        const profilesById = client.data.profilesById;
-        const newProfileIds = profiles.filter(id => {
-                const profile = profilesById[id];
-                return (armouredKeys.indexOf(profile.publicKey) !== -1);
-        });
-        return Actions.importKeys(newProfileIds)
 }
 
 export function tickFaster (client: Client.Client)

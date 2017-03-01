@@ -5,7 +5,4 @@ export interface Player {
         firstName: string;
         lastName: string;
         timezoneOffset: number;
-        publicKey: string;
-        privateKey: string;
-        passphrase: string;
 }

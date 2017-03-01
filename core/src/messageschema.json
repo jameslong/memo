@@ -43,7 +43,6 @@
                 "startGame": { "type": "boolean" },
                 "endGame": { "type": "boolean" },
                 "script": { "type": "string" },
-                "encrypted": { "type": "boolean" },
                 "receiver": {
                         "anyOf": [
                                 {
@@ -93,7 +92,6 @@
                 "startGame",
                 "endGame",
                 "message",
-                "encrypted",
                 "script",
                 "receiver",
                 "replyOptions",

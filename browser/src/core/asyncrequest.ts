@@ -8,12 +8,7 @@ import State = require('../../../core/src/gamestate');
 export function narratives (url: string)
 {
         const requestURL = url + '/narratives';
-        const data = {};
-        return get<Data.Narratives>(requestURL, data).then(data => {
-                const tasks = Helpers.arrayFromMap(data,
-                        narrative => State.addKeyManagers(narrative));
-                return Promise.all(tasks);
-        }).then(data => Helpers.mapFromNameArray(data));
+        return get<Data.Narratives>(requestURL, {});
 }
 
 export function get<T> (

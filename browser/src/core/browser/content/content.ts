@@ -1,7 +1,6 @@
 import Client = require('../../client');
 import Compose = require('./compose/compose');
 import ComposeBodyContainer = require('./compose/composebodycontainer');
-import Encryption = require('./encryptionkeys/encryption');
 import Folder = require('./folder/folder');
 import Help = require('./help/help');
 import HowToPlay = require('./howtoplay/howtoplay');
@@ -46,9 +45,6 @@ function renderContent(props: ContentProps)
                 break;
         case UI.Modes.FOLDER:
                 content = createFolder(state);
-                break;
-        case UI.Modes.ENCRYPTION:
-                content = createEncryption(state);
                 break;
         case UI.Modes.MAIN_MENU:
                 content = createMainMenu(state);
@@ -110,14 +106,6 @@ function createFolder (state: Client.Client)
         const foldersById = state.data.foldersById;
         const activeFolderId = state.ui.activeFolderId;
         return Folder({ foldersById, activeFolderId });
-}
-
-function createEncryption (state: Client.Client)
-{
-        const knownKeyIds = state.data.knownKeyIds;
-        const profilesById = state.data.profilesById;
-        const selectedIndex = state.ui.activeKeyIndex;
-        return Encryption({ knownKeyIds, profilesById, selectedIndex });
 }
 
 function createMainMenu (state: Client.Client)

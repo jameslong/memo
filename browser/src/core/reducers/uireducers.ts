@@ -40,14 +40,6 @@ export function ui (ui: UI.UI, action: Redux.Action<any>)
                         const sendingMessage = <Actions.SendingMessage><any>action;
                         return handleSendingMessage(ui, sendingMessage);
 
-                case Actions.Types.DECRYPT_MESSAGE:
-                        const decryptMessage = <Actions.DecryptMessage><any>action;
-                        return handleDecryptMessage(ui, decryptMessage);
-
-                case Actions.Types.DECRYPTING_MESSAGE:
-                        const decryptingMessage = <Actions.DecryptingMessage><any>action;
-                        return handleDecryptingMessage(ui, decryptingMessage);
-
                 case Actions.Types.SET_ACTIVE_FOLDER:
                         const setActiveFolder = <Actions.SetActiveFolder><any>action;
                         return handleSetActiveFolder(ui, setActiveFolder);
@@ -79,10 +71,6 @@ export function ui (ui: UI.UI, action: Redux.Action<any>)
                 case Actions.Types.EDIT_TO:
                         const editTo = <Actions.EditTo><any>action;
                         return handleEditTo(ui, editTo);
-
-                case Actions.Types.SET_ACTIVE_KEY_INDEX:
-                        const setActiveKey = <Actions.SetActiveKeyIndex><any>action;
-                        return handleSetActiveKeyIndex(ui, setActiveKey);
 
                 case Actions.Types.RECEIVE_REPLY:
                         const receiveAction = <Actions.ReceiveReply><any>action;
@@ -174,18 +162,6 @@ function handleSendingMessage (ui: UI.UI, action: Actions.SendingMessage)
         return Helpers.assign(ui, { sending });
 }
 
-function handleDecryptMessage (ui: UI.UI, action: Actions.DecryptMessage)
-{
-        const decrypting = false;
-        return Helpers.assign(ui, { decrypting });
-}
-
-function handleDecryptingMessage (ui: UI.UI, action: Actions.DecryptingMessage)
-{
-        const decrypting = action.parameters;
-        return Helpers.assign(ui, { decrypting });
-}
-
 function handleSetActiveFolder (ui: UI.UI, action: Actions.SetActiveFolder)
 {
         const activeFolderId = action.parameters;
@@ -236,12 +212,6 @@ function handleEditTo (ui: UI.UI, action: Actions.EditTo)
 {
         const editingDraftTo = action.parameters;
         return Helpers.assign(ui, { editingDraftTo });
-}
-
-function handleSetActiveKeyIndex (ui: UI.UI, action: Actions.SetActiveKeyIndex)
-{
-        const activeKeyIndex = action.parameters;
-        return Helpers.assign(ui, { activeKeyIndex });
 }
 
 function handleReceiveReply (ui: UI.UI, action: Actions.ReceiveReply)

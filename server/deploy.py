@@ -7,26 +7,25 @@ import shutil
 import subprocess
 
 dirname = 'tmp-deploy'
-zipname = 'topsecret'
+zipname = 'memo'
 zipname_with_ext = zipname + '.zip'
-s3bucketname = 'topsecret-deploy'
+s3bucketname = 'memo-deploy'
 
 # Create temp folder for game assets
 print 'Creating temporary asset folder...'
 os.makedirs(dirname)
 
 # Clone game content into temp folder
-print 'Cloning content into asset folder...'
-subprocess.call('git clone --depth 1 git@github.com:jameslong/topsecret-content.git ' + dirname + '/topsecret-content', shell=True)
-subprocess.call('git clone --depth 1 git@github.com:jameslong/topsecret.git ' + dirname + '/topsecret', shell=True)
+print 'Cloning repo into temp folder...'
+subprocess.call('git clone --depth 1 git@github.com:jameslong/memo.git ' + dirname + '/memo', shell=True)
 
 # Copy credentials
 print 'Copying credentials...'
-subprocess.call('cp server/credentials.json ' + dirname + '/topsecret/server', shell=True)
+subprocess.call('cp server/credentials.json ' + dirname + '/memo/server', shell=True)
 
 # Install dependencies
 print 'Installing dependencies...'
-os.chdir(dirname + '/topsecret')
+os.chdir(dirname + '/memo')
 subprocess.call('npm install', shell=True)
 subprocess.call('grunt server', shell=True)
 os.chdir('../../')

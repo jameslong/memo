@@ -47,7 +47,6 @@ export interface ThreadMessage {
         startGame: boolean;
         endGame: boolean;
         message: Message;
-        encrypted: boolean;
         script: string;
         receiver?: string; // For unsolicited player-to-character emails (where message is null)
         replyOptions: string;

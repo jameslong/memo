@@ -65,13 +65,6 @@ const commonCommands: Command.Command[] = [{
         shortDesc: 'Mail',
         desc: 'compose new message',
 }, {
-        id: 'decrypt',
-        key: 'd',
-        keyCodes: [KeyCodes.D],
-        actionCreator: KeyHandlers.decrypt,
-        shortDesc: 'Decrypt',
-        desc: 'decrypt message',
-}, {
         id: 'reply',
         key: 'r',
         keyCodes: [KeyCodes.R],
@@ -119,7 +112,7 @@ const composeCommands = [, {
         id: 'send-message',
         key: 'y',
         keyCodes: [KeyCodes.Y],
-        actionCreator: KeyHandlers.encryptSend,
+        actionCreator: KeyHandlers.send,
         shortDesc: 'Send',
         desc: 'send message',
 }, {
@@ -152,22 +145,6 @@ const composeBodyCommands = [{
         actionCreator: KeyHandlers.endEditBody,
         shortDesc: 'Finish Editing',
         desc: 'finish editing message body',
-}];
-
-const encryptionCommands = [{
-        id: 'next-key',
-        key: 'j',
-        keyCodes: [KeyCodes.J, KeyCodes.DOWN],
-        actionCreator: KeyHandlers.nextKey,
-        shortDesc: 'Next',
-        desc: 'view next key',
-}, {
-        id: 'previous-key',
-        key: 'k',
-        keyCodes: [KeyCodes.K, KeyCodes.UP],
-        actionCreator: KeyHandlers.previousKey,
-        shortDesc: 'Previous',
-        desc: 'view previous key',
 }];
 
 const folderCommands = [{
@@ -209,13 +186,6 @@ const indexCommands: Command.Command[] = [{
         actionCreator: KeyHandlers.displayMessage,
         shortDesc: 'Display',
         desc: 'display message',
-}, {
-        id: 'encryption',
-        key: 'b',
-        keyCodes: [KeyCodes.B],
-        actionCreator: KeyHandlers.encryption,
-        shortDesc: 'Keys',
-        desc: 'view and generate encryption keys',
 }];
 
 const loadCommands = [{
@@ -313,13 +283,6 @@ const pagerCommands = [{
         actionCreator: KeyHandlers.openAttachment,
         shortDesc: 'Open attachment',
         desc: 'open attachment',
-}, {
-        id: 'import-keys',
-        key: 'l',
-        keyCodes: [KeyCodes.L],
-        actionCreator: KeyHandlers.importKeys,
-        shortDesc: 'Import keys',
-        desc: 'import PGP keys from message',
 }];
 
 const saveCommands = [{
@@ -372,7 +335,6 @@ export const commands = [].concat(
         commonCommands,
         composeCommands,
         composeBodyCommands,
-        encryptionCommands,
         folderCommands,
         helpCommands,
         indexCommands,
@@ -395,13 +357,6 @@ export const commandIdsByMode: Data.IdsById = {
         [UI.Modes.COMPOSE_BODY]: [
                 'end-edit-body'
         ],
-        [UI.Modes.ENCRYPTION]: [
-                'exit',
-                'next-key',
-                'previous-key',
-                'open-main-menu',
-                'open-help'
-        ],
         [UI.Modes.FOLDER]: [
                 'next-mailbox',
                 'previous-mailbox',
@@ -417,7 +372,6 @@ export const commandIdsByMode: Data.IdsById = {
                 'mail',
                 'reply',
                 'change',
-                'encryption',
                 'tick-faster',
                 'tick-slower',
                 // 'add-time-offset',
@@ -430,7 +384,6 @@ export const commandIdsByMode: Data.IdsById = {
                 'display-message',
                 'mail',
                 'change',
-                'encryption',
                 'open-main-menu',
                 'open-help'
         ],
@@ -455,9 +408,7 @@ export const commandIdsByMode: Data.IdsById = {
                 'display-previous-message',
                 'mail',
                 'reply',
-                'decrypt',
                 'open-attachment',
-                'import-keys',
                 'change',
                 'open-main-menu',
                 'open-help'

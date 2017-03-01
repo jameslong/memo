@@ -39,14 +39,7 @@ export function join (...paths: string[]): string
 
 export function loadGameData (path: string, name: string)
 {
-        const narrative = loadNarrative(path, name);
-        return State.addKeyManagers(narrative);
-}
-
-export function initKeyManagers (data: NarrativeData[])
-{
-        const promises = data.map(narrative => State.addKeyManagers(narrative));
-        return Promise.all(promises);
+        return loadNarrative(path, name);
 }
 
 export function loadNarrative (stem: string, name: string): NarrativeData
