@@ -71,7 +71,8 @@ function createIndex (state: Client.Client)
 {
         const messages = Client.getActiveMessages(state);
         const activeMessageId = state.ui.activeMessageId;
-        return Index({ messages, activeMessageId });
+        const utcOffsetHours = state.data.player.timezoneOffset;
+        return Index({ messages, activeMessageId, utcOffsetHours });
 }
 
 function createHelp (state: Client.Client)
@@ -84,7 +85,8 @@ function createHelp (state: Client.Client)
 function createPager (state: Client.Client)
 {
         const message = Client.getActiveMessage(state);
-        return Pager({ message });
+        const utcOffsetHours = state.data.player.timezoneOffset;
+        return Pager({ message, utcOffsetHours });
 }
 
 function createCompose (state: Client.Client)

@@ -81,7 +81,7 @@ const debugConfig: ConfigState = {
                 invalidApplicationInvalidKeyThread: 'transfer_request_invalid_key',
                 resignationThread: 'resign',
                 narrativeFolder: '../content',
-                defaultNarrativeGroup: '',
+                defaultNarrativeGroup: 'test_data',
                 messageSchemaPath: '../core/src/messageschema.json',
                 profileSchemaPath: '../core/src/profileschema.json',
                 replyOptionSchemaPath: '../core/src/replyoptionschema.json',
