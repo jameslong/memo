@@ -8,7 +8,6 @@
   },
   "dependencies": {
     "electron-prebuilt": "^0.37.6",
-    "kbpgp": "^2.0.53",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
   },

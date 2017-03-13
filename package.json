@@ -36,7 +36,6 @@
     "grunt-ts": "^5.3.2",
     "is-my-json-valid": "^2.13.1",
     "jquery": "^2.2.1",
-    "kbpgp": "^2.0.52",
     "mailgun-js": "^0.7.7",
     "mkdirp": "^0.5.1",
     "mocha": "^2.4.5",
