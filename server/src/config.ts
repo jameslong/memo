@@ -12,10 +12,12 @@ export interface Credentials {
 }
 
 export interface ConfigState {
+        mode: string;
         port: string;
         useDynamoDB: boolean;
         useEmail: boolean;
         useBasicAuth: boolean;
+        logToFile: boolean;
         credentials: Credentials;
         debugDBTimeoutMs: number;
         messagesTableName: string;
@@ -42,7 +44,7 @@ export interface ConfigState {
         timeFactor: number;
 }
 
-export function loadCredentials(path: string)
+export function loadCredentials(config: ConfigState, path: string)
 {
         let credentials: Credentials = null;
         try {
@@ -54,17 +56,19 @@ export function loadCredentials(path: string)
                         `${path}/example_credentials.json`);
         }
 
-        return credentials;
+        return Helpers.assign(config, { credentials });
 }
 
 const htmlFooter = `<br><div style="border-top:1px solid #CCCCCC; font-size:12px;"><p>To stop playing, email careers@mydomain.com with the word 'resign' in the subject line.</p></div>`;
 const textFooter = `\n\n-----\nTo stop playing, email careers@mydomain.com with the word 'resign' in the subject line.`;
 
 const debugConfig: ConfigState = {
+        mode: 'DEBUG',
         port: '3000',
         useDynamoDB: false,
         useEmail: false,
         useBasicAuth: false,
+        logToFile: false,
         debugDBTimeoutMs: 1000,
         credentials: null,
         messagesTableName: 'message-dev',
@@ -92,10 +96,12 @@ const debugConfig: ConfigState = {
 };
 
 const releaseConfig: ConfigState = {
+        mode: 'RELEASE',
         port: '3000',
         useDynamoDB: true,
         useEmail: true,
         useBasicAuth: true,
+        logToFile: false,
         debugDBTimeoutMs: 1000,
         credentials: null,
         messagesTableName: 'message-dev',
@@ -122,5 +128,5 @@ const releaseConfig: ConfigState = {
         timeFactor: 1
 };
 
-export const releaseMode = false;
+const releaseMode = false;
 export const config = releaseMode ? releaseConfig : debugConfig;
