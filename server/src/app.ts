@@ -97,7 +97,9 @@ export function onGameData (
         const { useEmail, emailDomain } = config;
         const { htmlFooter, textFooter } = config.content;
         const emailAPIKey = config.credentials.mailgunApiKey;
-        const mailgun = Mailgun.createMailgun(emailAPIKey, emailDomain);
+        const mailgun = useEmail ?
+                Mailgun.createMailgun(emailAPIKey, emailDomain) :
+                null;
         const send = (data: Message.MessageData) => useEmail ?
                 Mailgun.sendMail(mailgun, htmlFooter, textFooter, data) :
                 Server.sendMail(data);
