@@ -1,18 +1,18 @@
 {
-        "name": "endgame",
-        "threadSubject": "endgame_subject",
+        "name": "begin_game",
+        "threadSubject": "begin_game_subject",
         "position": {
-                "x": 275,
+                "x": 110,
                 "y": 385
         },
-        "startGame": true,
-        "endGame": true,
+        "startGame": false,
+        "endGame": false,
         "message": {
                 "from": "james",
                 "to": [
                         "zoe"
                 ],
-                "body": "endgame_body"
+                "body": "begin_game_body"
         },
         "encrypted": true,
         "script": "",

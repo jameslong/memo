@@ -14,10 +14,10 @@ interface MenuBarContainerProps extends React.Props<any> {
 
 function renderMenuBarContainer (props: MenuBarContainerProps)
 {
-        const version = props.activeNarrativeId;
+        const narrativeGroup = props.activeNarrativeId;
         const activeMessageId = props.activeMessageId;
         const narrativeId = props.activeNarrativeId;
-        const onTestLocal = () => onTest(version, activeMessageId);
+        const onTestLocal = () => onTest(narrativeGroup, activeMessageId);
         const saving = props.saving;
 
         const menuBarProps = {
@@ -46,12 +46,12 @@ function onSelectNarrative (name: string)
         Redux.handleAction(action);
 }
 
-function onTest (version: string, messageName: string)
+function onTest (narrativeGroup: string, messageName: string)
 {
         const clientURL = '../../browser/build/index.html';
         const uiMode = 'INDEX_INBOX';
         const day = 0;
-        const querystring = `?version=${version}&messageName=${messageName}&uiMode=${uiMode}&day=${day}`;
+        const querystring = `?narrativeGroup=${narrativeGroup}&messageName=${messageName}&uiMode=${uiMode}&day=${day}`;
         const url = `${clientURL}${querystring}`;
         window.open(url);
 }

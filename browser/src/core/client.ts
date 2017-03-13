@@ -47,7 +47,7 @@ export function createClientFromSaveData (
         openExternal: (path: string) => void,
         saveData: RuntimeClient): Client
 {
-        const profiles = gameData[settings.version].profiles;
+        const profiles = gameData[settings.narrativeGroup].profiles;
 
         const serverSaveData = saveData.server;
         const server = Server.createServerFromSaveData(
@@ -84,7 +84,7 @@ export function createClient (
         const runtimeServer = Server.createRuntimeServer();
 
         const clock = Clock.createClock(settings.timeFactor);
-        const profilesById = gameData[settings.version].profiles;
+        const profilesById = gameData[settings.narrativeGroup].profiles;
         const folders = appData.folders;
         const runtimeData = Data.createRuntimeData(
                 player, profilesById, folders, clock);

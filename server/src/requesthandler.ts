@@ -222,10 +222,10 @@ export function addPlayer (state: App.State, req: any, res: any)
         const app = state.game;
         const promises = app.promises;
 
-        const version = state.config.content.defaultNarrativeGroup;
+        const narrativeGroup = state.config.content.defaultNarrativeGroup;
         const player = Player.createPlayerState(
                 email,
-                version,
+                narrativeGroup,
                 firstName,
                 lastName,
                 timezoneOffset);
@@ -618,10 +618,10 @@ export function beginGame (
 
         const firstName = playerData.firstName;
         const lastName = playerData.lastName;
-        const version = state.config.content.defaultNarrativeGroup;
+        const narrativeGroup = state.config.content.defaultNarrativeGroup;
         const utcOffset = playerData.utcOffset;
         const player = Player.createPlayerState(
-                email, version, firstName, lastName, utcOffset);
+                email, narrativeGroup, firstName, lastName, utcOffset);
         const timestampMs = Clock.gameTimeMs(state.clock);
 
         return Promises.beginGame(

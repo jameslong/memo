@@ -43,7 +43,7 @@ export function handleTimelyReply (
         data: Map.Map<State.NarrativeState>,
         promises: DBTypes.PromiseFactories)
 {
-        const groupName = player.version;
+        const groupName = player.narrativeGroup;
         const groupData = data[groupName];
         const body = reply.body;
         const strippedBody = reply.strippedBody;

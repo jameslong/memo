@@ -14,17 +14,16 @@ export function createPlayer0 ()
         const email = 'testemailaddress@playtopsecret.com';
         const firstName = 'John';
         const lastName = 'Smith';
-        const version = 'test';
+        const narrativeGroup = 'test';
         const timezoneOffset = 0;
         return Player.createPlayerState(
-                email, version, firstName, lastName, timezoneOffset);
+                email, narrativeGroup, firstName, lastName, timezoneOffset);
 }
 
 export function createMessage0 ()
 {
         const email = 'testemailaddress@playtopsecret.com';
         const id = '<0.john@smith.com>';
-        const version = 'Test';
         const name = 'test';
         const threadStartName: string = null;
         const numberOfChildren = 3;
@@ -42,7 +41,6 @@ export function createMessage1 ()
 {
         const email = 'testemailaddress@playtopsecret.com';
         const id = '<1.john@smith.com>';
-        const version = 'Test';
         const name = 'test';
         const threadStartName: string = null;
         const numberOfChildren = 2;

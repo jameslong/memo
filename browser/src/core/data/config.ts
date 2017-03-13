@@ -1,7 +1,7 @@
 import Helpers = require('../../../../core/src/utils/helpers');
 
 export interface GameSettings {
-        version: string;
+        narrativeGroup: string;
         beginGameMessage: string;
         initialUIMode: string;
         timeFactor: number;
@@ -28,7 +28,7 @@ function getQueryVariable (variable: string): string
 
 function getQueryStringParams (): GameSettings
 {
-        const version = getQueryVariable('version') || null;
+        const narrativeGroup = getQueryVariable('narrativeGroup') || null;
         const beginGameMessage = getQueryVariable('messageName') || null;
         const initialUIMode = getQueryVariable('uiMode') || null;
         const timeFactorParam = getQueryVariable('timeFactor');
@@ -36,7 +36,7 @@ function getQueryStringParams (): GameSettings
         const dayParam = getQueryVariable('day');
         const day = dayParam !== null ? parseInt(dayParam) : null;
         return {
-                version,
+                narrativeGroup,
                 beginGameMessage,
                 initialUIMode,
                 timeFactor,
@@ -48,14 +48,14 @@ export function createConfig (): ConfigData
 {
         const params = getQueryStringParams();
         const defaultSettings: GameSettings = {
-                version: '2',
-                beginGameMessage: 'welcome',
+                narrativeGroup: 'test_data',
+                beginGameMessage: 'begin_game',
                 initialUIMode: 'MAIN_MENU',
                 timeFactor: 1,
                 day: null,
         };
         const customSettings = {
-                version: params.version,
+                narrativeGroup: params.narrativeGroup,
                 beginGameMessage: params.beginGameMessage,
                 initialUIMode: params.initialUIMode || defaultSettings.initialUIMode,
                 timeFactor: params.timeFactor || defaultSettings.timeFactor,

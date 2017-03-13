@@ -93,17 +93,17 @@ export function beginGame (
         clock: Clock.Clock)
 {
         const { email, firstName, lastName, timezoneOffset } = playerData;
-        const { version, beginGameMessage } = settings;
+        const { narrativeGroup, beginGameMessage } = settings;
 
         const timestampMs = Clock.gameTimeMs(clock);
 
         const player = Player.createPlayerState(
-                email, version, firstName, lastName, timezoneOffset);
+                email, narrativeGroup, firstName, lastName, timezoneOffset);
         player.vars['utcStartDate'] = (settings.day !== null ?
                 timestampMs - (settings.day * 24 * 3600 * 1000) :
                 player.vars['utcStartDate']);
 
-        const groupData = server.app.narratives[version];
+        const groupData = server.app.narratives[narrativeGroup];
         const promises = server.app.promises;
 
         return Promises.beginGame(

@@ -39,7 +39,7 @@ export function update (
         message: Message.MessageState,
         player: Player.PlayerState)
 {
-        const narrative = app.narratives[player.version];
+        const narrative = app.narratives[player.narrativeGroup];
         const timestampMs = Clock.gameTimeMs(clock);
         const promises = app.promises;
         const state = { message, player, timestampMs, promises, narrative };
