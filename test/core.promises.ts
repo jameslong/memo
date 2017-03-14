@@ -18,7 +18,7 @@ describe('Promises', function () {
                         const timestampMs = Date.now();
 
                         return Promises.beginGame(
-                                'begingame',
+                                'begin_game',
                                 player,
                                 timestampMs,
                                 gameData,
