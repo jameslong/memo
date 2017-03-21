@@ -24,7 +24,8 @@ import UI = require('./ui');
 export function init (
         gameData: State.NarrativeStates,
         openFile: (path: string) => void,
-        openExternal: (path: string) => void)
+        openExternal: (path: string) => void,
+        quit: () => void)
 {
         const appConfig = ConfigData.createConfig();
         const appData = {
@@ -45,6 +46,7 @@ export function init (
                         gameData,
                         openFile,
                         openExternal,
+                        quit,
                         save.saveData) :
                 Client.createClient(
                         settings,
@@ -52,7 +54,8 @@ export function init (
                         gameData,
                         defaultPlayer,
                         openFile,
-                        openExternal);
+                        openExternal,
+                        quit);
 
         const wrapper = document.getElementById('wrapper');
         const getClient = Redux.init(client, Reducers.reduce, Browser, wrapper);
@@ -74,7 +77,8 @@ export function newGame (
         gameData: State.NarrativeStates,
         player: Player.Player,
         openFile: (path: string) => void,
-        openExternal: (path: string) => void)
+        openExternal: (path: string) => void,
+        quit: () => void)
 {
         const appConfig = ConfigData.createConfig();
         const appData = {
@@ -89,7 +93,8 @@ export function newGame (
                 gameData,
                 player,
                 openFile,
-                openExternal);
+                openExternal,
+                quit);
 
         const server = newClient.server;
         const clock = newClient.data.clock;
@@ -102,6 +107,7 @@ export function newGameFromSave (
         gameData: State.NarrativeStates,
         openFile: (path: string) => void,
         openExternal: (path: string) => void,
+        quit: () => void,
         saveData: Client.SaveData)
 {
         const appConfig = ConfigData.createConfig();
@@ -117,6 +123,7 @@ export function newGameFromSave (
                 gameData,
                 openFile,
                 openExternal,
+                quit,
                 saveData.saveData);
 }
 

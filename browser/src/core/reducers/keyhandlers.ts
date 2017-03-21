@@ -76,6 +76,9 @@ export function selectMenuOption (client: Client.Client): Redux.Action<any>
         case 'LOAD':
                 return Actions.setMode(UI.Modes.LOAD_MENU);
 
+        case 'QUIT':
+                return Actions.quit();
+
         default:
                 return null;
         }

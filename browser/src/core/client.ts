@@ -26,6 +26,7 @@ export interface Client {
         messageId: number;
         openFile: (path: string) => void;
         openExternal: (path: string) => void;
+        quit: () => void;
 };
 
 interface RuntimeClient {
@@ -45,6 +46,7 @@ export function createClientFromSaveData (
         gameData: State.NarrativeStates,
         openFile: (path: string) => void,
         openExternal: (path: string) => void,
+        quit: () => void,
         saveData: RuntimeClient): Client
 {
         const profiles = gameData[settings.narrativeGroup].profiles;
@@ -70,6 +72,7 @@ export function createClientFromSaveData (
                 messageId: saveData.messageId,
                 openFile,
                 openExternal,
+                quit,
         };
 }
 
@@ -79,7 +82,8 @@ export function createClient (
         gameData: State.NarrativeStates,
         player: Player.Player,
         openFile: (path: string) => void,
-        openExternal: (path: string) => void)
+        openExternal: (path: string) => void,
+        quit: () => void)
 {
         const runtimeServer = Server.createRuntimeServer();
 
@@ -94,7 +98,13 @@ export function createClient (
                 messageId: 0,
         };
         return createClientFromSaveData(
-                settings, appData, gameData, openFile, openExternal, saveData);
+                settings,
+                appData,
+                gameData,
+                openFile,
+                openExternal,
+                quit,
+                saveData);
 }
 
 export function tickClient ()

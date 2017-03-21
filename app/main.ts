@@ -5,6 +5,7 @@ import Helpers = require('../core/src/utils/helpers');
 import Main = require('../browser/src/core/main');
 import electron = require('electron');
 const shell = electron.shell;
+const remote = electron.remote;
 import State = require('../core/src/gamestate');
 
 window.onload = () => {
@@ -15,7 +16,8 @@ window.onload = () => {
         Promise.resolve(data).then(narratives => {
                 const openFile = (path: string) => shell.openItem(path);
                 const openExternal = (path: string) => shell.openExternal(path);
-                Main.init(narratives, openFile, openExternal);
+                const quit = () => remote.app.quit();
+                Main.init(narratives, openFile, openExternal, quit);
         }).catch(err => {
                 console.log(err);
                 throw err;
